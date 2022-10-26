@@ -1,13 +1,117 @@
-body {
+body,
+html {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.bgimg-1,
+.bgimg-2,
+.bgimg-3 {
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bgimg-1 {
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.6), 
+    rgba(0, 0, 0, 0.6)
+  ),url("./assets/images_1.jpg");
+  min-height: 100vh;
+}
+
+.bgimg-2 {
+  background-image: url("./assets/images_1.jpg");
+  min-height: 100vh;
+}
+
+.bgimg-3 {
+  background-color: #111;
+  min-height: 35vh;
+}
+
+.caption {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.caption-form {
+  position: sticky;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: #000;
+}
+
+.caption .border {
+  background-color: #000;
+  color: #fff;
+  padding: 18px;
+  font-size: auto;
+  letter-spacing: 5px;
+}
+
+.flex {
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.title-modal {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.content-title {
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: center;
+  gap: 30px;
+  align-items: center;
+}
+
+.grid-space {
+  justify-content: space-between;
+}
+
+@media (min-width: 700px) {
+
+  .MuiFormControl-root,
+  .MuiTextField-root {
+    width: -webkit-fill-available;
+    /* width: auto;*/
+  }
+}
+
+.paper {
+  margin: 120px 0 0 0;
+}
+
+.MuiButton-root {
+  margin-top: 30px !important;
+}
+
+.Slxdj:disabled {
+  display: none !important;
+}
+
+.Slxdj {
+  display: none !important;
 }
