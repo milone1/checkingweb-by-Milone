@@ -1,0 +1,15 @@
+.inner-carousel-dem {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.carousel-dem {
+    cursor: grab !important;
+    overflow: hidden !important;
+    width: 90%;
+}
+
+.form-dem {
+    pointer-events: none !important;
+    background-color: brown !important;
+}

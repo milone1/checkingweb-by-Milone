@@ -115,3 +115,13 @@ html {
 .Slxdj {
   display: none !important;
 }
+
+.avatar {
+  border-radius: 50%;
+  background-color: lightgreen;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Paper, TextField, Button, Select, InputLabel, DialogContentText, DialogContent, DialogTitle, Dialog, IconButton } from '@material-ui/core'
+import { Grid, Paper, TextField, Button, Select, InputLabel, DialogContentText, DialogContent, DialogTitle, Dialog, IconButton, Avatar } from '@material-ui/core'
 import { UserContext } from "../context/UserContext";
 import { Box, FormControl, MenuItem } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,8 @@ import { listSex } from "../list";
 import { storeForm } from "../service";
 import { getDataFromCodePassenger } from "../petitions";
 import ListDropDown from "../components/ListDropDown";
+import Swal from 'sweetalert2'
+import { PanoramaSharp } from "@material-ui/icons";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,7 +25,6 @@ export const FormPassenger = ({ id }) => {
   const params = useParams();
   // const { correct, setCorrect } = React.useState('');
   const paperStyle = { margin: 120, padding: 20, height: 'auto', width: 350 }
-  // const btnstyle = { margin: '50px 10px 20px 10px' }
 
   const [values, setValues] = useState({
   });
@@ -55,10 +56,13 @@ export const FormPassenger = ({ id }) => {
   const [button, setButton] = useState(true)
 
   const [codePassenger, setCodePassenger] = useState([]);
+  const [ids, setIds] = useState(0);
 
-  const [ids, setIds] = useState(0)
+  var Send = "Enviar";
+  var Save = "Guardar";
+  var lMigrado = 0;
 
-  var regName = /^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/;
+  var regName = /^[a-zA-Z]+$/;
   var regNumbers = /^([0-9])*$/;
 
   const fetchDataFromCountry = async () => {
@@ -136,119 +140,181 @@ export const FormPassenger = ({ id }) => {
       [name]: value,
       tCodigoReserva: params.reserva,
       tHotel: params.hotel,
-      lMigrado: 1,
-      tCodigoPasajero: codePassenger[ids].tCodigoPasajero,
+      lMigrado: lMigrado,
+      // tCodigoPasajero: codePassenger[ids].tCodigoPasajero,
     });
 
-    if (errorTNombre === false && errorTApellidoMaterno === false && errorTApellidoPaterno === false && errorTDocumento === false && errorTDomicilio === false && errorTelePhone === false && Object.entries(values).length === 13) {
+    if (errorTNombre === false && errorTApellidoMaterno === false && errorTApellidoPaterno === false && errorTDocumento === false && errorTDomicilio === false && errorTelePhone === false && Object.entries(values).length === 9) {
       setButton(false)
     } else {
       setButton(true)
     }
+    console.log(values)
   }
 
   const handleOpenDialog = () => {
     setOpen(!open);
   }
 
-  const fetchStoreForm = async (id) => {
-    if (listUser.length === 0) {
+  const fetchStoreForm = (id) => {
+    if (listUser.length === id) {
       listUser.push(values)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Agregado`,
+        showConfirmButton: false,
+        timer: 2000,
+        color: '#000',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     } else {
       listUser[id] = values;
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Modificado`,
+        showConfirmButton: false,
+        timer: 2000,
+        color: '#000',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     }
-
 
     if ((id + 1) === parseInt(params.numPassenger)) {
-      await storeForm(listUser);
-      //* listUser.push(values)
-      handleOpenDialog()
+      // await storeForm(listUser);
+      // listUser.push(values)
+      // handleOpenDialog()
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `${listUser.length} registrados`,
+        showConfirmButton: false,
+        timer: 2000,
+        color: '#000',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     }
+
+    console.log(listUser)
   }
 
-  console.log('parado en ' + ids);
+  const fetchBtn = () => {
+    // setBtnSend("Enviar")
+  }
+
+  if (id + 1  === params.numPassenger) {
+    fetchBtn()
+  }
 
   useEffect(() => {
+    Swal.fire('Asegurese de rellenar los formularios en el orden asignado.')
     fetchDataFromCountry()
     fetchDataCodePassenger()
     setIds(id)
-  }, [])
+  }, [listUser])
   return (
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Paper elevation={10} style={paperStyle} key={id} className="paper">
-              <FormControl >
-                <Box sx={{ flexGrow: 1 }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={12}>
-                      <TextField
-                        error={errorTNombre}
-                        name="tNombre"
-                        helperText={leyendTNombre}
-                        onChange={handleChangeInputs}
-                        label='Ingrese su Nombre:'
-                        required
-                      />
-                    </Grid>
-                    <Grid item={true} xs={12} sm={6}>
-                      <TextField
-                        error={errorTApellidoPaterno}
-                        name="tPaterno"
-                        helperText={leyendTApellidoPaterno}
-                        onChange={handleChangeInputs}
-                        label='Apellido paterno:'
-                        required
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        error={errorTApellidoMaterno}
-                        name="tMaterno"
-                        helperText={leyendTApellidoMaterno}
-                        onChange={handleChangeInputs}
-                        label='Apellido Materno:'
-                        required
-                      />
-                    </Grid>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <Paper elevation={10} style={paperStyle} key={id} className="paper">
+            <center>
+              <Grid align='center' className="avatar">
+                <h2>{id + 1}</h2>
+              </Grid>
+            </center>
+            <FormControl >
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={12}>
+                    <TextField
+                      error={errorTNombre}
+                      name="tNombre"
+                      // disabled={stateFirst}
+                      helperText={leyendTNombre}
+                      onChange={handleChangeInputs}
+                      label='Ingrese su Nombre:'
+                      required
+                    />
+                  </Grid>
+                  <Grid item={true} xs={12} sm={6}>
+                    <TextField
+                      error={errorTApellidoPaterno}
+                      name="tPaterno"
+                      // disabled={stateFirst}
+                      helperText={leyendTApellidoPaterno}
+                      onChange={handleChangeInputs}
+                      label='Apellido paterno:'
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      error={errorTApellidoMaterno}
+                      name="tMaterno"
+                      // disabled={stateFirst}
+                      helperText={leyendTApellidoMaterno}
+                      onChange={handleChangeInputs}
+                      label='Apellido Materno:'
+                      required
+                    />
+                  </Grid>
 
-                    <ListDropDown text="Ingrese el Documento:" list={listDocument} handleChangeInputs={handleChangeInputs} name="tTipoDocumento" />
+                  {/* <ListDropDown text="Ingrese el Documento:" list={listDocument} handleChangeInputs={handleChangeInputs} name="tTipoDocumento" /> */}
 
 
-                    <Grid item xs={12} md={12} >
-                      <TextField
-                        error={errorTDocumento}
-                        name="tDocumento"
-                        helperText={leyendTDocumento}
-                        onChange={handleChangeInputs}
-                        label='Documento'
-                        placeholder='Número de documento:'
-                        required
-                      />
-                    </Grid>
+                  <Grid item xs={12} md={12} >
+                    <TextField
+                      error={errorTDocumento}
+                      name="tDocumento"
+                      helperText={leyendTDocumento}
+                      onChange={handleChangeInputs}
+                      // disabled={stateFirst}
+                      label='Documento'
+                      placeholder='Número de documento:'
+                      required
+                    />
+                  </Grid>
 
-                    <ListDropDown text="Ingrese su género:" list={listSex} handleChangeInputs={handleChangeInputs} name="tSexo" />
+                  {/* <ListDropDown text="Ingrese su género:" list={listSex} handleChangeInputs={handleChangeInputs} name="tSexo" /> */}
 
-                    <Grid item xs={12} md={12}>
-                      <TextField
-                        error={errorTDomicilio}
-                        name="tDomicilio"
-                        helperText={leyendTDomicilio}
-                        onChange={handleChangeInputs}
-                        label='Ingrese Domicilio:'
-                        required
-                      />
-                      <TextField
-                        error={errorTelePhone}
-                        name="tCelular"
-                        helperText={leyendTelePhone}
-                        onChange={handleChangeInputs}
-                        label='n° de Teléfono:'
-                        required
-                      />
-                    </Grid>
+                  <Grid item xs={12} md={12}>
+                    <TextField
+                      error={errorTDomicilio}
+                      name="tDomicilio"
+                      helperText={leyendTDomicilio}
+                      // disabled={stateFirst}
+                      onChange={handleChangeInputs}
+                      label='Ingrese Domicilio:'
+                      required
+                    />
+                    <TextField
+                      error={errorTelePhone}
+                      name="tCelular"
+                      // disabled={stateFirst}
+                      helperText={leyendTelePhone}
+                      onChange={handleChangeInputs}
+                      label='n° de Teléfono:'
+                      required
+                    />
+                  </Grid>
 
-                    <Grid item xs={12} md={12}>
+                  {/* <Grid item xs={12} md={12}>
                       <Stack
                         direction={{ xs: 'column', sm: 'row' }}
                         justifyContent="space-between"
@@ -275,47 +341,50 @@ export const FormPassenger = ({ id }) => {
                           }
                         </Select>
                       </Stack>
-                    </Grid>
+                    </Grid> */}
 
-                    <ListDropDown text="Ingrese su motivo de viaje:" list={listTravel} handleChangeInputs={handleChangeInputs} name="tMotivoViaje" />
+                  {/* <ListDropDown text="Ingrese su motivo de viaje:" list={listTravel} handleChangeInputs={handleChangeInputs} name="tMotivoViaje" /> */}
 
-                  </Grid>
-                </Box>
-                <center>
-                  <Button className="btn-enviar" onClick={() => fetchStoreForm(id)} type='submit' color='primary' variant="contained" disabled={button}>Enviar</Button>
+                </Grid>
+              </Box>
+              <center>
+                <Button
+                  className="btn-enviar" onClick={() => fetchStoreForm(id)} type='submit' color='primary' variant="contained" disabled={button}>
+                  {( id + 1 ) === parseInt(params.numPassenger) ? Send : Save}
+                </Button>
+              </center>
+            </FormControl >
+          </Paper>
+
+          <Dialog TransitionComponent={Transition} open={open} onClose={() => setOpen(!open)} maxWidth={"md"} fullWidth={true}>
+            <div>
+              <DialogTitle className="title-modal">
+                <IconButton onClick={() => setOpen(!open)} className="button-close">
+                  Cerrar
+                </IconButton>
+              </DialogTitle>
+              <DialogContent className="modal">
+                <center className="content-title">
+                  ENCUESTA DE SATISFACCION DEL CLIENTE
                 </center>
-              </FormControl >
-            </Paper>
-
-            <Dialog TransitionComponent={Transition} open={open} onClose={() => setOpen(!open)} maxWidth={"md"} fullWidth={true}>
-              <div>
-                <DialogTitle className="title-modal">
-                  <IconButton onClick={() => setOpen(!open)} className="button-close">
-                    Cerrar
-                  </IconButton>
-                </DialogTitle>
-                <DialogContent className="modal">
-                  <center className="content-title">
-                    ENCUESTA DE SATISFACCION DEL CLIENTE
-                  </center>
-                  <DialogContentText>
-                    ¿Que tan satisfecho estás con el proceso de Check in Express -- Llenando las Fichas?
-                  </DialogContentText>
-                  {/* <ListChips /> */}
-                  <DialogContentText>
-                    Comparta cualquier comentario y/o sugerencia.
-                  </DialogContentText>
-                  <TextField
-                    label="Motivo de Viaje"
-                    multiline
-                    maxRows={10}
-                  />
-                  <Button variant="outlined">Enviar</Button>
-                </DialogContent>
-              </div>
-            </Dialog>
-          </Grid>
+                <DialogContentText>
+                  ¿Que tan satisfecho estás con el proceso de Check in Express -- Llenando las Fichas?
+                </DialogContentText>
+                {/* <ListChips /> */}
+                <DialogContentText>
+                  Comparta cualquier comentario y/o sugerencia.
+                </DialogContentText>
+                <TextField
+                  label="Motivo de Viaje"
+                  multiline
+                  maxRows={10}
+                />
+                <Button variant="outlined">Enviar</Button>
+              </DialogContent>
+            </div>
+          </Dialog>
         </Grid>
-      </Box>
+      </Grid>
+    </Box>
   );
 }
