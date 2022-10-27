@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Paper, TextField, Button, Select, InputLabel, DialogContentText, DialogContent, DialogTitle, Dialog, IconButton, Avatar } from '@material-ui/core'
+import { Grid, Paper, TextField, Button, Select, InputLabel, DialogContentText, DialogContent, DialogTitle, Dialog, IconButton } from '@material-ui/core'
 import { UserContext } from "../context/UserContext";
 import { Box, FormControl, MenuItem } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -11,8 +11,7 @@ import { listSex } from "../list";
 import { storeForm } from "../service";
 import { getDataFromCodePassenger } from "../petitions";
 import ListDropDown from "../components/ListDropDown";
-import Swal from 'sweetalert2'
-import { PanoramaSharp } from "@material-ui/icons";
+import Swal from 'sweetalert2';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,13 +22,10 @@ export const FormPassenger = ({ id }) => {
   const { listUser } = React.useContext(UserContext);
 
   const params = useParams();
-  // const { correct, setCorrect } = React.useState('');
   const paperStyle = { margin: 120, padding: 20, height: 'auto', width: 350 }
 
-  const [values, setValues] = useState({
-  });
+  const [values, setValues] = useState({});
   const [open, setOpen] = useState(false);
-
   const [country, setCountry] = useState([]);
 
   //* change tNombre
@@ -134,6 +130,7 @@ export const FormPassenger = ({ id }) => {
         break;
       default:
     }
+    //* al mover el tcodigo pasajero asegurar el cambio del numero valido para activar
 
     setValues({
       ...values,
@@ -141,19 +138,15 @@ export const FormPassenger = ({ id }) => {
       tCodigoReserva: params.reserva,
       tHotel: params.hotel,
       lMigrado: lMigrado,
-      // tCodigoPasajero: codePassenger[ids].tCodigoPasajero,
+      tCodigoPasajero: codePassenger[ids].tCodigoPasajero,
     });
 
-    if (errorTNombre === false && errorTApellidoMaterno === false && errorTApellidoPaterno === false && errorTDocumento === false && errorTDomicilio === false && errorTelePhone === false && Object.entries(values).length === 9) {
+    if (errorTNombre === false && errorTApellidoMaterno === false && errorTApellidoPaterno === false && errorTDocumento === false && errorTDomicilio === false && errorTelePhone === false && Object.entries(values).length === 13) {
       setButton(false)
     } else {
       setButton(true)
     }
     console.log(values)
-  }
-
-  const handleOpenDialog = () => {
-    setOpen(!open);
   }
 
   const fetchStoreForm = (id) => {
@@ -192,7 +185,6 @@ export const FormPassenger = ({ id }) => {
     }
 
     if ((id + 1) === parseInt(params.numPassenger)) {
-      // await storeForm(listUser);
       // listUser.push(values)
       // handleOpenDialog()
       Swal.fire({
@@ -210,12 +202,22 @@ export const FormPassenger = ({ id }) => {
         }
       })
     }
+    Swal.fire({
+      title: `El formulario se enviara con la informaión de ${listUser.length} pasajeros`,
+      showCancelButton: true,
+      confirmButtonText: 'Registrar Pasajeros',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetchBtn()
+        Swal.fire('Enviado Correctamente', '', 'success')
+      }
+    })
 
     console.log(listUser)
   }
 
-  const fetchBtn = () => {
-    // setBtnSend("Enviar")
+  const fetchBtn = async() => {
+    await storeForm(listUser);
   }
 
   if (id + 1  === params.numPassenger) {
@@ -275,7 +277,7 @@ export const FormPassenger = ({ id }) => {
                     />
                   </Grid>
 
-                  {/* <ListDropDown text="Ingrese el Documento:" list={listDocument} handleChangeInputs={handleChangeInputs} name="tTipoDocumento" /> */}
+                  <ListDropDown text="Ingrese el Documento:" list={listDocument} handleChangeInputs={handleChangeInputs} name="tTipoDocumento" />
 
 
                   <Grid item xs={12} md={12} >
@@ -291,7 +293,7 @@ export const FormPassenger = ({ id }) => {
                     />
                   </Grid>
 
-                  {/* <ListDropDown text="Ingrese su género:" list={listSex} handleChangeInputs={handleChangeInputs} name="tSexo" /> */}
+                  <ListDropDown text="Ingrese su género:" list={listSex} handleChangeInputs={handleChangeInputs} name="tSexo" />
 
                   <Grid item xs={12} md={12}>
                     <TextField
@@ -314,7 +316,7 @@ export const FormPassenger = ({ id }) => {
                     />
                   </Grid>
 
-                  {/* <Grid item xs={12} md={12}>
+                  <Grid item xs={12} md={12}>
                       <Stack
                         direction={{ xs: 'column', sm: 'row' }}
                         justifyContent="space-between"
@@ -341,9 +343,9 @@ export const FormPassenger = ({ id }) => {
                           }
                         </Select>
                       </Stack>
-                    </Grid> */}
+                    </Grid>
 
-                  {/* <ListDropDown text="Ingrese su motivo de viaje:" list={listTravel} handleChangeInputs={handleChangeInputs} name="tMotivoViaje" /> */}
+                  <ListDropDown text="Ingrese su motivo de viaje:" list={listTravel} handleChangeInputs={handleChangeInputs} name="tMotivoViaje" />
 
                 </Grid>
               </Box>

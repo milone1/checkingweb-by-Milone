@@ -11,8 +11,6 @@ export const storeForm = async (passenger) => {
       body: JSON.stringify(passenger),
     });
     await response.json();
-    // document.querySelector("form").reset();
-    console.log("success");
   } catch (error) {
     console.log(error.message);
   }
