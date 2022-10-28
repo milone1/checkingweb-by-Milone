@@ -125,3 +125,18 @@ html {
   justify-content: center;
   width: 50px;
 }
+
+@media (min-width: 700px) {
+  .MuiFormControl-root,
+  .MuiTextField-root {
+      width: -webkit-fill-available;
+      /* width: auto;*/ 
+  }
+}
+
+.img-marca {
+  width: 80%;
+  height: 10%;
+  background-color: rgba(225,225,225, 0.2);
+}
+

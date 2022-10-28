@@ -27,7 +27,7 @@ const SliderDem = () => {
         <motion.div
           className="inner-carousel-dem"
           drag='x'
-          dragConstraints={{right: width+200, left: -width }}
+          dragConstraints={{right: width, left: -width }}
         >
           {indents}
         </motion.div>

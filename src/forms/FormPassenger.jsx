@@ -13,6 +13,7 @@ import { getDataFromCodePassenger } from "../petitions";
 import ListDropDown from "../components/ListDropDown";
 import Swal from 'sweetalert2';
 
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -22,7 +23,7 @@ export const FormPassenger = ({ id }) => {
   const { listUser } = React.useContext(UserContext);
 
   const params = useParams();
-  const paperStyle = { margin: 120, padding: 20, height: 'auto', width: 350 }
+  const paperStyle = { margin: 120, padding: 20, height: 'auto', width: 300 }
 
   const [values, setValues] = useState({});
   const [open, setOpen] = useState(false);
@@ -216,11 +217,11 @@ export const FormPassenger = ({ id }) => {
     console.log(listUser)
   }
 
-  const fetchBtn = async() => {
+  const fetchBtn = async () => {
     await storeForm(listUser);
   }
 
-  if (id + 1  === params.numPassenger) {
+  if (id + 1 === params.numPassenger) {
     fetchBtn()
   }
 
@@ -252,6 +253,7 @@ export const FormPassenger = ({ id }) => {
                       onChange={handleChangeInputs}
                       label='Ingrese su Nombre:'
                       required
+                      fullWidth
                     />
                   </Grid>
                   <Grid item={true} xs={12} sm={6}>
@@ -262,6 +264,7 @@ export const FormPassenger = ({ id }) => {
                       helperText={leyendTApellidoPaterno}
                       onChange={handleChangeInputs}
                       label='Apellido paterno:'
+                      fullWidth
                       required
                     />
                   </Grid>
@@ -273,6 +276,7 @@ export const FormPassenger = ({ id }) => {
                       helperText={leyendTApellidoMaterno}
                       onChange={handleChangeInputs}
                       label='Apellido Materno:'
+                      fullWidth
                       required
                     />
                   </Grid>
@@ -288,6 +292,7 @@ export const FormPassenger = ({ id }) => {
                       onChange={handleChangeInputs}
                       // disabled={stateFirst}
                       label='Documento'
+                      fullWidth
                       placeholder='Número de documento:'
                       required
                     />
@@ -303,6 +308,7 @@ export const FormPassenger = ({ id }) => {
                       // disabled={stateFirst}
                       onChange={handleChangeInputs}
                       label='Ingrese Domicilio:'
+                      fullWidth
                       required
                     />
                     <TextField
@@ -312,38 +318,42 @@ export const FormPassenger = ({ id }) => {
                       helperText={leyendTelePhone}
                       onChange={handleChangeInputs}
                       label='n° de Teléfono:'
+                      fullWidth
                       required
                     />
                   </Grid>
 
                   <Grid item xs={12} md={12}>
-                      <Stack
-                        direction={{ xs: 'column', sm: 'row' }}
-                        justifyContent="space-between"
-                        alignItems="center"
-                        spacing={{ xs: 4, sm: 4, md: 4 }}>
-                        <InputLabel
-                          variant="filled"
-                          sx={{ color: "black" }}
-                        >
-                          <center>
-                            Ingrese su pais:
-                          </center>
-                        </InputLabel>
-                        <Select
-                          name="tIdentificadorSunat"
-                          onChange={handleChangeInputs}
-                          variant="filled"
-                        >
-                          {country.length > 0 && country.map(element => (
-                            <MenuItem value={element.tIdentificadorSunat}>
-                              {element.tDescripcionPais}
-                            </MenuItem>
-                          ))
-                          }
-                        </Select>
-                      </Stack>
-                    </Grid>
+                    <Stack
+                      // direction={{ xs: 'column', sm: 'row' }}
+                      justifyContent="space-between"
+                      alignItems="center"
+                      spacing={{ xs: 4, sm: 4, md: 4 }}>
+                      <InputLabel
+                        variant="filled"
+                        sx={{ color: "black" }}
+                      >
+                        <center>
+                          Ingrese su pais:
+                        </center>
+                      </InputLabel>
+                      <Select
+                        displayEmpty
+                        // autoWidth={true}
+                        // className="dropDown-list"
+                        name="tIdentificadorSunat"
+                        onChange={handleChangeInputs}
+                        variant="filled"
+                      >
+                        {country.length > 0 && country.map(element => (
+                          <MenuItem value={element.tIdentificadorSunat}>
+                            {element.tDescripcionPais}
+                          </MenuItem>
+                        ))
+                        }
+                      </Select>
+                    </Stack>
+                  </Grid>
 
                   <ListDropDown text="Ingrese su motivo de viaje:" list={listTravel} handleChangeInputs={handleChangeInputs} name="tMotivoViaje" />
 
@@ -352,7 +362,7 @@ export const FormPassenger = ({ id }) => {
               <center>
                 <Button
                   className="btn-enviar" onClick={() => fetchStoreForm(id)} type='submit' color='primary' variant="contained" disabled={button}>
-                  {( id + 1 ) === parseInt(params.numPassenger) ? Send : Save}
+                  {(id + 1) === parseInt(params.numPassenger) ? Send : Save}
                 </Button>
               </center>
             </FormControl >

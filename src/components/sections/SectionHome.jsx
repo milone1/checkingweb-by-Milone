@@ -1,6 +1,6 @@
 import React from 'react';
 import people from '../../assets/people.png';
-import ai from '../../assets/ai.png';
+import ai from '../../assets/london.png';
 import './sectionHome.css';
 
 const SectionHome = () => (
@@ -14,7 +14,7 @@ const SectionHome = () => (
       </div>
     </div>
     <div className="gpt3__header-image">
-      <img alt='' src={ai} />
+      <img alt='' className='img-marca' src={ai} style={{backgroundColor:'rgba(225,225,225,0.2),'}}/>
     </div>
   </div>
 );
