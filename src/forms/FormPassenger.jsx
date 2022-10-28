@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Grid, Paper, TextField, Button, Select, InputLabel, DialogContentText, DialogContent, DialogTitle, Dialog, IconButton } from '@material-ui/core'
 import { UserContext } from "../context/UserContext";
@@ -147,7 +148,6 @@ export const FormPassenger = ({ id }) => {
     } else {
       setButton(true)
     }
-    console.log(values)
   }
 
   const fetchStoreForm = (id) => {
@@ -213,8 +213,6 @@ export const FormPassenger = ({ id }) => {
         Swal.fire('Enviado Correctamente', '', 'success')
       }
     })
-
-    console.log(listUser)
   }
 
   const fetchBtn = async () => {
@@ -230,7 +228,7 @@ export const FormPassenger = ({ id }) => {
     fetchDataFromCountry()
     fetchDataCodePassenger()
     setIds(id)
-  }, [listUser])
+  }, [])
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
