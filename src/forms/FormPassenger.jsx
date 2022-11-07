@@ -132,8 +132,7 @@ export const FormPassenger = ({ id }) => {
         break;
       default:
     }
-    //* al mover el tcodigo pasajero asegurar el cambio del numero valido para activar
-
+    
     setValues({
       ...values,
       [name]: value,
@@ -144,12 +143,12 @@ export const FormPassenger = ({ id }) => {
     });
 
     if (
-      errorTNombre === false && 
-      errorTApellidoMaterno === false && 
-      errorTApellidoPaterno === false && 
-      errorTDocumento === false && 
-      errorTDomicilio === false && 
-      errorTelePhone === false && 
+      errorTNombre === false &&
+      errorTApellidoMaterno === false &&
+      errorTApellidoPaterno === false &&
+      errorTDocumento === false &&
+      errorTDomicilio === false &&
+      errorTelePhone === false &&
       Object.entries(values).length === 14) {
       setButton(false)
     } else {
@@ -159,105 +158,103 @@ export const FormPassenger = ({ id }) => {
   }
 
   const fetchStoreForm = (id) => {
-    const fetchStoreForm = (id) => {
-      console.log(listUser)
-      if (listUser.filter(passenger => passenger.tCodigoPasajero === values.tCodigoPasajero).length >= 1) {
-        listUser[id] = values;
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Modificado`,
-          showConfirmButton: false,
-          timer: 2000,
-          color: '#000',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          }
-        });
-      } else {
-        listUser.push(values);
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Agregado`,
-          showConfirmButton: false,
-          timer: 2000,
-          color: '#000',
-          showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-          },
-          hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-          }
-        })
-      }
-    }
-    // if (listUser.length === id) {
-    //   listUser.push(values)
-    //   Swal.fire({
-    //     position: 'center',
-    //     icon: 'success',
-    //     title: `Agregado`,
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //     color: '#000',
-    //     showClass: {
-    //       popup: 'animate__animated animate__fadeInDown'
-    //     },
-    //     hideClass: {
-    //       popup: 'animate__animated animate__fadeOutUp'
-    //     }
-    //   })
-    // } else {
-    //   listUser[id] = values;
-    //   Swal.fire({
-    //     position: 'center',
-    //     icon: 'success',
-    //     title: `Modificado`,
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //     color: '#000',
-    //     showClass: {
-    //       popup: 'animate__animated animate__fadeInDown'
-    //     },
-    //     hideClass: {
-    //       popup: 'animate__animated animate__fadeOutUp'
-    //     }
-    //   })
-    // }
 
-    // if ((id + 1) === parseInt(params.numPassenger)) {
-    //   // listUser.push(values)
-    //   // handleOpenDialog()
-    //   Swal.fire({
-    //     position: 'center',
-    //     icon: 'success',
-    //     title: `${listUser.length} registrados`,
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //     color: '#000',
-    //     showClass: {
-    //       popup: 'animate__animated animate__fadeInDown'
-    //     },
-    //     hideClass: {
-    //       popup: 'animate__animated animate__fadeOutUp'
-    //     }
-    //   })
-    // }
-    // Swal.fire({
-    //   title: `El formulario se enviara con la informaión de ${listUser.length} pasajeros`,
-    //   showCancelButton: true,
-    //   confirmButtonText: 'Registrar Pasajeros',
-    // }).then((result) => {
-    //   if (result.isConfirmed) {
-    //     fetchBtn()
-    //     Swal.fire('Enviado Correctamente', '', 'success')
-    //   }
-    // })
+    if (listUser.filter(passenger => passenger.tCodigoPasajero === values.tCodigoPasajero).length >= 1) {
+      listUser[id] = values;
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Modificado`,
+        showConfirmButton: false,
+        timer: 2000,
+        color: '#000',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      });
+    } else {
+      listUser.push(values);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: `Agregado`,
+        showConfirmButton: false,
+        timer: 2000,
+        color: '#000',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
+    }
   }
+  // if (listUser.length === id) {
+  //   listUser.push(values)
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'success',
+  //     title: `Agregado`,
+  //     showConfirmButton: false,
+  //     timer: 2000,
+  //     color: '#000',
+  //     showClass: {
+  //       popup: 'animate__animated animate__fadeInDown'
+  //     },
+  //     hideClass: {
+  //       popup: 'animate__animated animate__fadeOutUp'
+  //     }
+  //   })
+  // } else {
+  //   listUser[id] = values;
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'success',
+  //     title: `Modificado`,
+  //     showConfirmButton: false,
+  //     timer: 2000,
+  //     color: '#000',
+  //     showClass: {
+  //       popup: 'animate__animated animate__fadeInDown'
+  //     },
+  //     hideClass: {
+  //       popup: 'animate__animated animate__fadeOutUp'
+  //     }
+  //   })
+  // }
+
+  // if ((id + 1) === parseInt(params.numPassenger)) {
+  //   // listUser.push(values)
+  //   // handleOpenDialog()
+  //   Swal.fire({
+  //     position: 'center',
+  //     icon: 'success',
+  //     title: `${listUser.length} registrados`,
+  //     showConfirmButton: false,
+  //     timer: 2000,
+  //     color: '#000',
+  //     showClass: {
+  //       popup: 'animate__animated animate__fadeInDown'
+  //     },
+  //     hideClass: {
+  //       popup: 'animate__animated animate__fadeOutUp'
+  //     }
+  //   })
+  // }
+  // Swal.fire({
+  //   title: `El formulario se enviara con la informaión de ${listUser.length} pasajeros`,
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Registrar Pasajeros',
+  // }).then((result) => {
+  //   if (result.isConfirmed) {
+  //     fetchBtn()
+  //     Swal.fire('Enviado Correctamente', '', 'success')
+  //   }
+  // })
 
   const fetchBtn = async () => {
     await storeForm(listUser);
@@ -273,7 +270,7 @@ export const FormPassenger = ({ id }) => {
     fetchDataCodePassenger()
     setIds(id)
     console.log(values)
-    
+
   }, [])
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -322,13 +319,13 @@ export const FormPassenger = ({ id }) => {
                     />
                   </Grid>
 
-                  <ListDropDown 
-                    text="Ingrese el Documento:" 
-                    list={listDocument} 
-                    handleChangeInputs={handleChangeInputs} 
-                    name="tTipoDocumento" 
+                  <ListDropDown
+                    text="Ingrese el Documento:"
+                    list={listDocument}
+                    handleChangeInputs={handleChangeInputs}
+                    name="tTipoDocumento"
                   />
-                  
+
                   <Grid item xs={12} md={12} >
                     <TextField
                       error={errorTDocumento}
