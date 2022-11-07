@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const BASE_URL = "https://www.api.infomatica.pe/api/saveDatosPasajero2/"
 
 export const storeForm = async (passenger) => {
@@ -12,6 +14,6 @@ export const storeForm = async (passenger) => {
     });
     await response.json();
   } catch (error) {
-    console.log(error.message);
+    console.log()
   }
 };

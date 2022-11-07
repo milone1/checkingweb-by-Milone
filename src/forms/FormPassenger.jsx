@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Grid, Paper, TextField, Button, Select, InputLabel,
+import {
+  Grid, Paper, TextField, Button, Select, InputLabel,
   //  DialogContentText, DialogContent, DialogTitle, Dialog, IconButton
-   } from '@material-ui/core'
+} from '@material-ui/core'
 import { UserContext } from "../context/UserContext";
 import { Box, FormControl, MenuItem } from "@mui/material";
 import { useParams } from "react-router-dom";
@@ -63,7 +64,7 @@ export const FormPassenger = ({ id }) => {
   var lMigrado = 0;
 
   var regName = /^[a-zA-Z]+$/;
-  var regNumbers = /^([0-9])*$/;
+  var regNumbers = /[A-Za-z0-9]+/g;
 
   const fetchDataFromCountry = async () => {
     const response = await getDataFromCodePassenger('https://www.api.infomatica.pe/api/getPaises/');
@@ -160,7 +161,6 @@ export const FormPassenger = ({ id }) => {
   }
 
   const fetchStoreForm = (id) => {
-
     if (listUser.filter(passenger => passenger.tCodigoPasajero === values.tCodigoPasajero).length >= 1) {
       listUser[id] = values;
       Swal.fire({
@@ -193,6 +193,18 @@ export const FormPassenger = ({ id }) => {
           popup: 'animate__animated animate__fadeOutUp'
         }
       })
+    }
+    if ((id + 1) === parseInt(params.numPassenger)) {
+      Swal.fire({
+        title: `El formulario se enviara con la informaión de ${listUser.length} pasajeros`,
+        showCancelButton: true,
+        confirmButtonText: 'Registrar Pasajeros',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetchBtn()
+          Swal.fire('Enviado Correctamente', '', 'success')
+        }
+      });
     }
   }
   // if (listUser.length === id) {
@@ -230,40 +242,22 @@ export const FormPassenger = ({ id }) => {
   // }
 
   // if ((id + 1) === parseInt(params.numPassenger)) {
-  //   // listUser.push(values)
-  //   // handleOpenDialog()
   //   Swal.fire({
-  //     position: 'center',
-  //     icon: 'success',
-  //     title: `${listUser.length} registrados`,
-  //     showConfirmButton: false,
-  //     timer: 2000,
-  //     color: '#000',
-  //     showClass: {
-  //       popup: 'animate__animated animate__fadeInDown'
-  //     },
-  //     hideClass: {
-  //       popup: 'animate__animated animate__fadeOutUp'
+  //     title: `El formulario se enviara con la informaión de ${listUser.length} pasajeros`,
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Registrar Pasajeros',
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       fetchBtn()
+  //       Swal.fire('Enviado Correctamente', '', 'success')
   //     }
   //   })
+
   // }
-  // Swal.fire({
-  //   title: `El formulario se enviara con la informaión de ${listUser.length} pasajeros`,
-  //   showCancelButton: true,
-  //   confirmButtonText: 'Registrar Pasajeros',
-  // }).then((result) => {
-  //   if (result.isConfirmed) {
-  //     fetchBtn()
-  //     Swal.fire('Enviado Correctamente', '', 'success')
-  //   }
-  // })
+
 
   const fetchBtn = async () => {
     await storeForm(listUser);
-  }
-
-  if (id + 1 === params.numPassenger) {
-    fetchBtn()
   }
 
   useEffect(() => {
@@ -271,8 +265,6 @@ export const FormPassenger = ({ id }) => {
     fetchDataFromCountry()
     fetchDataCodePassenger()
     setIds(id)
-    console.log(values)
-
   }, [])
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -397,7 +389,7 @@ export const FormPassenger = ({ id }) => {
             </FormControl >
             <center>
               <Button
-                className="btn-enviar" onClick={() => fetchStoreForm(id)} type='submit' color='primary' variant="contained" disabled={button}>
+                className="btn-enviar" onClick={() => fetchStoreForm(id)} color='primary' variant="contained" disabled={button}>
                 {(id + 1) === parseInt(params.numPassenger) ? Send : Save}
               </Button>
             </center>
