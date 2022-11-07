@@ -23,8 +23,8 @@ const ListDropDown = ({ text, list, handleChangeInputs, name }) => {
           onChange={handleChangeInputs}
           variant="filled"
         >
-          {list.length > 0 && list.map(e => (
-            <MenuItem value={e.value}>
+          {list.length > 0 && list.map((e, index) => (
+            <MenuItem value={e.value} key={index}>
               {e.text}
             </MenuItem>
           ))}
