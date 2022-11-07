@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { Grid, Paper, TextField, Button, Select, InputLabel, DialogContentText, DialogContent, DialogTitle, Dialog, IconButton } from '@material-ui/core'
+import { Grid, Paper, TextField, Button, Select, InputLabel,
+  //  DialogContentText, DialogContent, DialogTitle, Dialog, IconButton
+   } from '@material-ui/core'
 import { UserContext } from "../context/UserContext";
 import { Box, FormControl, MenuItem } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Stack } from "@mui/system";
-import Slide from '@mui/material/Slide';
+// import Slide from '@mui/material/Slide';
 import { listTravel } from "../list";
 import { listDocument } from "../list";
 import { listSex } from "../list";
@@ -15,9 +17,9 @@ import ListDropDown from "../components/ListDropDown";
 import Swal from 'sweetalert2';
 
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+// const Transition = React.forwardRef(function Transition(props, ref) {
+//   return <Slide direction="up" ref={ref} {...props} />;
+// });
 
 export const FormPassenger = ({ id }) => {
 
@@ -27,7 +29,7 @@ export const FormPassenger = ({ id }) => {
   const paperStyle = { margin: 120, padding: 20, height: 'auto', width: 300 }
 
   const [values, setValues] = useState({});
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [country, setCountry] = useState([]);
 
   //* change tNombre
@@ -132,7 +134,7 @@ export const FormPassenger = ({ id }) => {
         break;
       default:
     }
-    
+
     setValues({
       ...values,
       [name]: value,
