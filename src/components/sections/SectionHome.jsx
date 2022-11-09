@@ -2,6 +2,7 @@ import React from 'react';
 import people from '../../assets/people.png';
 import ai from '../../assets/london.png';
 import './sectionHome.css';
+import LoadingCircle from '../loading';
 
 const SectionHome = () => (
   <div className="gpt3__header section__padding" id="home">
@@ -11,6 +12,7 @@ const SectionHome = () => (
       <div className="gpt3__header-content__people">
         <img alt='' src={people} />
         <p>1,600 personas realizarón su reserva en las últimas 24h</p>
+        {/* <LoadingCircle /> */}
       </div>
     </div>
     <div className="gpt3__header-image">
