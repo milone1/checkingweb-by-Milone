@@ -2,7 +2,6 @@ import React from 'react';
 import people from '../../assets/people.png';
 import ai from '../../assets/london.png';
 import './sectionHome.css';
-import LoadingCircle from '../loading';
 
 const SectionHome = () => (
   <div className="gpt3__header section__padding" id="home">
